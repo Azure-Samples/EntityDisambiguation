@@ -33,7 +33,8 @@ This project framework provides the following:
 - Create an [Azure Cognitive Search](https://docs.microsoft.com/en-ca/azure/search/search-create-service-portal)
  using azure portal and fill [config.yml](src/resources/config.yml) config file with properties
 
-### Quickstart
+### Quick Start
+
 (Add steps to get up and running quickly)
 
 1.  git clone [https://github.com/Azure-Samples/EntityDisambiguation.git](https://github.com/Azure-Samples/EntityDisambiguation.git)
@@ -51,14 +52,16 @@ speech to search the data source and respond to the user’s request.
 ![scenario](doc-resources/architecture.png)
 
 ### Methodology
+
 Our approach is to measure the performance of the search engine in the retrieval 
 of the misspelled personaName when the search engine uses specific or multi search analyzers.
 
 ### Usage
 
 #### Create a Search Index and insert documents in the index:
-- Search index will be created from the [index-schema.json](resource/index-schema.json) file
-- documents are people names sourcing from [names.csv](resources/names.csv)
+
+- Search index will be created from the [index-schema.json](src/resources/index-schema.json) file
+- documents are people names sourcing from [names.csv](src/resources/names.csv)
 
 ```python
 from azuresearchclient import AzureSearchClient
@@ -70,14 +73,15 @@ AZURE.create_index("INDEX_NAME")
 AZURE.insert_documents("INDEX_NAME")
 ```
 #### Query the search index by providing misspelled names and calculate the performance
+
 - Create a set of all analyzers(fields)
-- load misspelled names from [names-misspelled.csv](resources/names-misspelled.csv)
-- load the expected names/results from [names-expected.csv](resources/names-expected.csv)
+- load misspelled names from [names-misspelled.csv](src/resources/names-misspelled.csv)
+- load the expected names/results from [names-expected.csv](src/resources/names-expected.csv)
 - for all elements in teh subset:
 - send a query to the search index providing the missepelled name and target field
     - Mark the reponse (e.g. TP, TN, FP, FN)
     - Calculate the Precision, Recall and F1 score
-- statistics will be stored in [generated](generated) directory
+- statistics will be stored in [generated](src/generated) directory
 
 ```python
 from constants import Constants
@@ -107,6 +111,7 @@ STATS.create_plot(SCORES)
 ![plot](doc-resources/plot.png)
 
 #### Experiment Result
+
 Now consider that there is a name in our search index : **Tom O'halleran**
 
 Our speech recognition or OCR extracted this text with an incorrect spelleing: **Tom O Halleran**
@@ -130,6 +135,7 @@ AZURE.make_search("Tom O Halleran", ["standard_lucene"])
 ```
 
 ##### Analyzer with best performance experiment
+
 ```python
 AZURE = AzureSearchClient()
 AZURE.make_search("Tom O Halleran", ["camelcase", "url_email", "text_microsoft"])
@@ -144,8 +150,4 @@ We can see that default setting was not successful to retrieve the most relevant
 
 ## Resources
 
-(Any additional resources or related projects)
-
-- Link to supporting information
-- Link to similar sample
-- ...
+- [Azure Cognitive Search](https://docs.microsoft.com/en-ca/azure/search/search-create-service-portal)
