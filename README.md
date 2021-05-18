@@ -49,6 +49,8 @@ This project framework provides the following:
 
 Figure below indicates the overall architecture from user 
 speech to search the data source and respond to the user’s request.
+
+
 ![scenario](doc-resources/architecture.png)
 
 ### Methodology
