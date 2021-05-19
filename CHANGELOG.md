@@ -1,13 +1,8 @@
-## [project-title] Changelog
+## Entity Disambiguation Changelog
 
-<a name="x.y.z"></a>
-# x.y.z (yyyy-mm-dd)
+<a name="Initial Integration into Azure Samples"></a>
+# Initial Integration into Azure Samples (2021-05-19)
 
 *Features*
-* ...
-
-*Bug Fixes*
-* ...
-
-*Breaking Changes*
-* ...
+* a methodology to disambiguate misspelled entities using Search Analyzers
+* Integration of CI (Flake8, Black and unit tests)

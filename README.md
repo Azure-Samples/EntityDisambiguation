@@ -13,7 +13,7 @@ products:
 
 [![CI](https://github.com/Azure-Samples/EntityDisambiguation/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Azure-Samples/EntityDisambiguation/actions/workflows/ci.yml)
 
-# EntityDisambiguation
+# Entity Disambiguation
 
 This document proposes a methodology to disambiguate misspelled
  entities by comparing the search retrieval
