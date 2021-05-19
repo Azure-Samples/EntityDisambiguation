@@ -43,8 +43,6 @@ This project framework provides the following:
 
 ### Quick Start
 
-(Add steps to get up and running quickly)
-
 1.  git clone [https://github.com/Azure-Samples/EntityDisambiguation.git](https://github.com/Azure-Samples/EntityDisambiguation.git)
 2. `python3 -m venv env`
 3. (Unix or MacOS) `source env/bin/activate` (Windows) `env\Scripts\activate.bat`
