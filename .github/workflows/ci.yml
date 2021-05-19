@@ -48,5 +48,5 @@ jobs:
 
       - name: Code Quality
         run: |
-          falke8 src
+          flake8 src
           balck .
