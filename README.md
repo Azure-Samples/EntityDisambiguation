@@ -3,12 +3,10 @@ page_type: sample
 languages:
   - python
 name: "Entity Disambiguation Using Azure Search"
-description: "A methodology to disambiguate misspelled entities by
-comparing the search retrieval performance with different custom search
+description: "A methodology to disambiguate misspelled entities using different custom search
 analyzers in a search engine"
 products:
-  - azure search
-  - azure-cognitive-services
+  - azure-cognitive-search
 ---
 
 [![CI](https://github.com/Azure-Samples/EntityDisambiguation/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Azure-Samples/EntityDisambiguation/actions/workflows/ci.yml)
