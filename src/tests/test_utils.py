@@ -1,10 +1,10 @@
 import os
 import unittest
 
-from utils import Utils
+from ..utils import Utils
 
 
-class TestStatistics(unittest.TestCase):
+class TestUtils(unittest.TestCase):
     def setUp(cls):
         cls.utils = Utils(os.path.join(os.path.join(os.pardir, "resources")))
 
