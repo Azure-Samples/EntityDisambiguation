@@ -21,7 +21,8 @@ class Statistics:
 
     def mark_confusion_matrix(self, expected, retrieved):
         """
-        this method calculates the confusion matrix based on expected and retrieved results
+        this method calculates the confusion matrix
+        based on expected and retrieved results
         :param expected:  expected name
         :param retrieved:   what retrieved from the src engine
         :return:  TP or FP or TN or FN
@@ -36,9 +37,9 @@ class Statistics:
             return Result.FN
 
         raise Exception(
-            'expected:{} name and retrieved:{} name does not belong'
-            ' to any of the TN,FP,TF,FN categories'.format(
-                expected, retrieved))
+            "expected:{} name and retrieved:{} name does not belong"
+            " to any of the TN,FP,TF,FN categories".format(expected, retrieved)
+        )
 
     @staticmethod
     def is_true_positive(expected_name, retrieved_name):
@@ -49,9 +50,11 @@ class Statistics:
         :param retrieved_name:
         :return:
         """
-        return expected_name == retrieved_name \
-               and expected_name != "NOT_FOUND" \
-               and retrieved_name != "NOT_FOUND"
+        return (
+            expected_name == retrieved_name
+            and expected_name != "NOT_FOUND"
+            and retrieved_name != "NOT_FOUND"
+        )
 
     @staticmethod
     def is_false_positive(expected_name, retrieved_name):
@@ -62,9 +65,10 @@ class Statistics:
         :param retrieved_name:
         :return:
         """
-        return expected_name != retrieved_name \
-               and ((expected_name != "NOT_FOUND" and retrieved_name != "NOT_FOUND")
-                    or (expected_name == "NOT_FOUND" and retrieved_name != "NOT_FOUND"))
+        return expected_name != retrieved_name and (
+            (expected_name != "NOT_FOUND" and retrieved_name != "NOT_FOUND")
+            or (expected_name == "NOT_FOUND" and retrieved_name != "NOT_FOUND")
+        )
 
     @staticmethod
     def is_true_negative(expected_name, retrieved_name):
@@ -75,9 +79,11 @@ class Statistics:
         :param retrieved_name:
         :return:
        """
-        return expected_name == retrieved_name \
-               and expected_name == "NOT_FOUND" \
-               and retrieved_name == "NOT_FOUND"
+        return (
+            expected_name == retrieved_name
+            and expected_name == "NOT_FOUND"
+            and retrieved_name == "NOT_FOUND"
+        )
 
     @staticmethod
     def is_false_negative(expected_name, retrieved_name):
@@ -89,9 +95,11 @@ class Statistics:
         :return:
         """
 
-        return expected_name != retrieved_name \
-               and expected_name != "NOT_FOUND" \
-               and retrieved_name == "NOT_FOUND"
+        return (
+            expected_name != retrieved_name
+            and expected_name != "NOT_FOUND"
+            and retrieved_name == "NOT_FOUND"
+        )
 
     @staticmethod
     def calc_precision(true_positive, false_positive):
@@ -127,19 +135,24 @@ class Statistics:
         Calculates an F1 score based on the precision and recall results.
 
         Keyword arguments:
-        precision(double) - calculated precision from true_positives and false_positives.
-        recall(double) - calculated recall from true_positives and false_negatives.
+        precision(double) - calculated precision from
+        true_positives and false_positives.
+        recall(double) - calculated recall from
+        true_positives and false_negatives.
         """
         if precision + recall == 0:
             print("F1 undefined  (Divide by zero)")
             return -1
         return 2 * precision * recall / (precision + recall)
 
-    def calculate_statistics(self, correct_list,
-                             misspelled_list,
-                             subsets,
-                             search_engine,
-                             generate_reports=False):
+    def calculate_statistics(
+        self,
+        correct_list,
+        misspelled_list,
+        subsets,
+        search_engine,
+        generate_reports=False,
+    ):
         """
         This function calculates different metrics for each fields and returns
         a list of the results accordingly.
@@ -156,7 +169,8 @@ class Statistics:
         :param misspelled_list:   list of misspelled items
         :param subsets:  a subset of all  combinations of different fields.
         we send a src request to each of those subsets
-        :param generate_reports: if true, it create individual report files per field
+        :param generate_reports: if true,
+        it create individual report files per field
         :return: a list of the results
         """
         print("total subsets: " + str(len(subsets)))
@@ -164,18 +178,32 @@ class Statistics:
 
             if self.already_processed(subset):
                 continue
-            DIR = 'generated'
-            print(len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))]))
+            DIR = "generated"
+            print(
+                len(
+                    [
+                        name
+                        for name in os.listdir(DIR)
+                        if os.path.isfile(os.path.join(DIR, name))
+                    ]
+                )
+            )
             true_positive = 0
             true_negative = 0
             false_positive = 0
             false_negative = 0
             data = []
             for i in range(0, len(misspelled_list)):
-                retrieved = search_engine.make_search(misspelled_list[i][0], list(subset))
+                retrieved = search_engine.make_search(
+                    misspelled_list[i][0], list(subset)
+                )
                 print(retrieved)
                 expected = correct_list[i][0]
-                result = Statistics().mark_confusion_matrix(expected, retrieved).value
+                result = (
+                    Statistics()
+                    .mark_confusion_matrix(expected, retrieved)
+                    .value  # noqa: E501
+                )
                 if result == Result.TP.value:
                     true_positive += 1
                 elif result == Result.TN.value:
@@ -188,18 +216,19 @@ class Statistics:
                 data_object = {
                     Constants.retrieved: retrieved,
                     Constants.expected: expected,
-                    Constants.result: result}
+                    Constants.result: result,
+                }
 
                 data.append(data_object)
 
-            file_name = '-'.join(subset)
+            file_name = "-".join(subset)
             if generate_reports:
                 self.utils.generate_reports(data, file_name)
 
     @staticmethod
     def already_processed(subset):
-        file_name = '-'.join(subset)
-        file_name = os.path.join('generated', file_name + '.csv')
+        file_name = "-".join(subset)
+        file_name = os.path.join("generated", file_name + ".csv")
         return os.path.isfile(file_name)
 
     @staticmethod
@@ -210,12 +239,20 @@ class Statistics:
             f.extend(filenames)
             for a_file in filenames:
                 df = pd.read_csv(os.path.join("generated", a_file))
-                fn = len(df.loc[df['result'] == 'FN'])
-                tp = len(df.loc[df['result'] == 'TP'])
-                tn = len(df.loc[df['result'] == 'TN'])
-                fp = len(df.loc[df['result'] == 'FP'])
+                fn = len(df.loc[df["result"] == "FN"])
+                tp = len(df.loc[df["result"] == "TP"])
+                tn = len(df.loc[df["result"] == "TN"])
+                fp = len(df.loc[df["result"] == "FP"])
                 analyzers = os.path.splitext(a_file)[0]
-                statistics.append({"fn": fn, "tp": tp, "tn": tn, "fp": fp, "fields": analyzers})
+                statistics.append(
+                    {
+                        "fn": fn,
+                        "tp": tp,
+                        "tn": tn,
+                        "fp": fp,
+                        "fields": analyzers,
+                    }  # noqa: E501
+                )
         return statistics
 
     @staticmethod
@@ -238,26 +275,32 @@ class Statistics:
         ax = fig.add_subplot(111)
         fig.subplots_adjust(top=0.85)
 
-        ax.set_xlabel('Analyzers with F1 higher than default(standard_lucene)')
-        ax.set_ylabel('F1 Score')
-        ax.plot(f1, label='recall')
-        ax.annotate('F1 score: 0.69', xy=(70, 55),
-                    arrowprops=dict(facecolor='yellow', shrink=0.01),
-                    xycoords='figure points',
-                    xytext=(70, 200),
-                    )
+        ax.set_xlabel("Analyzers with F1 higher than default(standard_lucene)")
+        ax.set_ylabel("F1 Score")
+        ax.plot(f1, label="recall")
+        ax.annotate(
+            "F1 score: 0.69",
+            xy=(70, 55),
+            arrowprops=dict(facecolor="yellow", shrink=0.01),
+            xycoords="figure points",
+            xytext=(70, 200),
+        )
 
-        ax.annotate('F1 score: 0.74', xy=(370, 220),
-                    arrowprops=dict(facecolor='green', shrink=0.01),
-                    xycoords='figure points',
-                    xytext=(329, 100),
-                    )
+        ax.annotate(
+            "F1 score: 0.74",
+            xy=(370, 220),
+            arrowprops=dict(facecolor="green", shrink=0.01),
+            xycoords="figure points",
+            xytext=(329, 100),
+        )
         plt.show()
 
     def generate_f1(self):
         statistics = self.read_generated_files_to_list()
         for stat in statistics:
-            stat["precision"] = Statistics.calc_precision(stat["tn"], stat["fp"])
+            stat["precision"] = Statistics.calc_precision(
+                stat["tn"], stat["fp"]
+            )  # noqa: E501
             stat["recall"] = Statistics.calc_recall(stat["tp"], stat["fn"])
             stat["f1"] = Statistics.f1_score(stat["precision"], stat["recall"])
         return statistics
@@ -271,6 +314,7 @@ class Result(Enum):
     TP:   True Positive
     FP:   False Positive
     """
+
     TN = "TN"
     FN = "FN"
     TP = "TP"

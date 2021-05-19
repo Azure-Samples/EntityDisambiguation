@@ -20,7 +20,9 @@ if __name__ == "__main__":
     # list of misspelled names
     misspelled_list = STATS.utils.read_csv("names-misspelled.csv")
     # making queries (with misspelled names) and measure the result
-    STATS.calculate_statistics(correct_list, misspelled_list, all_subsets, AZURE, True)
+    STATS.calculate_statistics(
+        correct_list, misspelled_list, all_subsets, AZURE, True
+    )  # noqa: E501
 
     # plot the results
     SCORES = STATS.generate_f1()

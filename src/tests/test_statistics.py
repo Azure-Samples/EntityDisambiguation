@@ -104,5 +104,3 @@ class TestStatistics(unittest.TestCase):
         response = self.statistics.f1_score(-10, 10)
 
         self.assertEqual(expected, response)
-
-

@@ -28,7 +28,7 @@ class Utils:
         generated = "generated"
         self.make_directory_if_not_exists(generated)
         data_frame = pd.DataFrame(data)
-        filename = os.path.join(generated, file_name + '.csv')
+        filename = os.path.join(generated, file_name + ".csv")
         data_frame.to_csv(filename)
 
     def read_json_from_resources(self, filename):
@@ -40,7 +40,7 @@ class Utils:
         full_path = os.path.join(self.resources_path, filename)
         resources = {}
         if full_path:
-            with open(full_path, 'r') as file:
+            with open(full_path, "r") as file:
                 resources = json.load(file)
         return resources
 
@@ -51,7 +51,7 @@ class Utils:
         :return: a list containing elements per line of CSV
         """
         filename = os.path.join(self.resources_path, filename)
-        with open(filename, 'r') as a_file:
+        with open(filename, "r") as a_file:
             return list(csv.reader(a_file))
 
     def get_config(self):
@@ -60,7 +60,7 @@ class Utils:
         :return: dictionary of configuration file
         """
         yaml_path = os.path.join(self.resources_path, "config.yml")
-        with open(yaml_path, 'r') as configuration:
+        with open(yaml_path, "r") as configuration:
             return yaml.load(configuration, Loader=yaml.FullLoader)
 
     @staticmethod
@@ -73,22 +73,27 @@ class Utils:
         """
         score = 0
         found_name = "NOT_FOUND"
-        for hit in response['value']:
-            if hit['@search.score'] > score:
-                score = hit['@search.score']
-                found_name = hit['standard_lucene']
+        for hit in response["value"]:
+            if hit["@search.score"] > score:
+                score = hit["@search.score"]
+                found_name = hit["standard_lucene"]
         return found_name
 
     @staticmethod
     def get_subsets(iterable):
         """
-        This method is to create a full subset of the elements of an iterable parameter
+        This method is to create a full subset of
+        the elements of an iterable parameter
         :param iterable:
         :return:
         """
         list_of_set = list(iterable)
-        return list(chain.from_iterable(combinations(list_of_set, r)
-                                        for r in range(1, len(list_of_set) + 1)))
+        return list(
+            chain.from_iterable(
+                combinations(list_of_set, r)
+                for r in range(1, len(list_of_set) + 1)  # noqa: E501
+            )
+        )
 
     @staticmethod
     def sort_on_f1_score(a_list, descending=True):
@@ -97,7 +102,7 @@ class Utils:
         :param a_list:
         :return: a sorted list
         """
-        return sorted(a_list, key=lambda i: (i['f1']), reverse=descending)
+        return sorted(a_list, key=lambda i: (i["f1"]), reverse=descending)
 
     @staticmethod
     def make_directory_if_not_exists(directory):
