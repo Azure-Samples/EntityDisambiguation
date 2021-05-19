@@ -5,3 +5,4 @@ PyYAML==5.2
 requests==2.22.0
 flake8==3.9.2
 black==19.10b0
+pytest==6.2.4
