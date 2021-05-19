@@ -37,7 +37,7 @@ jobs:
           source env/bin/activate
           python -m pip install -r requirements.txt
           flake8 src
-          balck .
+          black  . --check  --diff .
 
 #      - name: Code Quality
 #        run: |
