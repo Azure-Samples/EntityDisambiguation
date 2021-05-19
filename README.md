@@ -10,6 +10,7 @@ products:
   - azure search
   - azure-cognitive-services
 ---
+
 # EntityDisambiguation
 
 This document proposes a methodology to disambiguate misspelled
