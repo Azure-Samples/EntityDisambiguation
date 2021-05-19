@@ -1,28 +1,33 @@
 ---
 page_type: sample
 languages:
-- python
+  - python
 name: "Entity Disambiguation Using Azure Search"
-description: "A methodology to disambiguate misspelled entities by comparing the search retrieval performance with different custom search analyzers in a search engine"
+description: "A methodology to disambiguate misspelled entities by
+comparing the search retrieval performance with different custom search
+analyzers in a search engine"
 products:
-- azure search
-- azure-cognitive-services
+  - azure search
+  - azure-cognitive-services
 ---
 # EntityDisambiguation
 
-This document proposes a methodology to disambiguate misspelled entities by comparing the search retrieval 
+This document proposes a methodology to disambiguate misspelled
+ entities by comparing the search retrieval
 performance with different custom search analyzers in a search engine.
- Hence, even if the provided query contains some misspelled entities, 
- the search engine can respond to the request with higher precision and 
- recall than the default settings. This method can be applied to any 
+ Hence, even if the provided query contains some misspelled entities,
+ the search engine can respond to the request with higher precision and
+ recall than the default settings. This method can be applied to any
  search engine service capable of adding custom search analyzers.
- 
+
 
 ## Features
 
 This project framework provides the following:
 
-* An approach to measure the performance of the search engine in the retrieval of the misspelled personaName when the search engine uses specific or multi search analyzers.
+* An approach to measure the performance of the search engine in
+ the retrieval of the misspelled personaName when the search engine
+ uses specific or multi search analyzers.
 
 
 ## Getting Started
